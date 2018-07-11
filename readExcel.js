@@ -1,14 +1,29 @@
-const http = require('http');
 
-const hostname = '127.0.0.1';
-const port = 3000;
+class Invoice {
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!\n');
-});
+  constructor(filename, location) {
+    this.filename = filename;
+    this.location = location;
+  }
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+  getFinishedFilename() {
+    let date = new Date();
+    return `${this.filename + this.location}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+  }
+}
+
+let invoice = new Invoice('check', 'USA');
+
+//Read a file
+var workbook = new Excel.Workbook();
+workbook.xlsx.readFile("data/Sample.xlsx").then(function () {
+            
+//Get sheet by Name
+var worksheet=workbook.getWorksheet('Sheet1');
+            
+//Get Lastrow
+var row = worksheet.lastRow;
+//Save the workbook
+return workbook.xlsx.writeFile("data/checked.xlsx");
+ 
 });
